@@ -27,10 +27,17 @@ end
 --DEBUG CODE
 
 function Debug()
-if IsButtonPressed(8,0) and IsButtonPressed(14,0) and IsButtonPressed(10,0) --[[B, LeftStick, Left Trugger]] then 
- CameraAllowChange(true)
- CameraAllowScriptedChange(true)
- CameraReturnToPlayer()
+    if IsButtonPressed(8,0) and IsButtonPressed(14,0) and IsButtonPressed(10,0) --[[B, LeftStick, Left Trugger]] then 
+     CameraAllowChange(true)
+     CameraAllowScriptedChange(true)
+     CameraReturnToPlayer()
+    elseif IsButtonPressed(14,0) and IsButtonPressed(8,0) --[[DPAD Down, B]] then
+     CameraSetActive(14)
+     CameraAllowChange(false)
+     CameraAllowScriptedChange(false)
+     SoundSetAudioFocusCamera()
+     SoundSetAudioFocusPlayer()
+    end
 end
 
 --END OF DEBUG CODE
