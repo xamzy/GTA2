@@ -2,23 +2,26 @@
 --GTA2 CODE
 
 main = function()
-    CreateThread("Debug")
 	while not SystemIsReady() do
 		Wait(0)
 	end
 	while true do
 		Wait(0)
-		if PedIsValid(gPlayer) then 
-			CameraSetActive(14)
-			CameraAllowChange(false)
-			CameraAllowScriptedChange(false)
-			SoundSetAudioFocusCamera()
-			SoundSetAudioFocusPlayer()
-		--[[elseif IsButtonPressed(1,0) then 
-			CameraAllowChange(true)
-			CameraAllowScriptedChange(true)
-			CameraReturnToPlayer()]]
-		end
+            CreateThread("Debug")
+            local x = 9999
+            local y = 9999
+            local z = 9999
+        if PlayerIsInAreaXYZ(0,x,y,z) then 
+		 CameraSetActive(14)
+		 CameraAllowChange(false)
+		 CameraAllowScriptedChange(false)
+		 SoundSetAudioFocusCamera()
+		 SoundSetAudioFocusPlayer()
+        elseif not PlayerIsInAreaXYZ(0,x,y,z) then
+         CameraAllowChange(false)
+         CameraAllowScriptedChange(false)
+         CameraReturnToPlayer()
+        end
 	end
 end
 
@@ -26,19 +29,19 @@ end
 ----------------------------------------------------------------------------------------------------
 --DEBUG CODE
 
-function Debug()
-    if IsButtonPressed(8,0) and IsButtonPressed(14,0) and IsButtonPressed(10,0) --[[B, LeftStick, Left Trugger]] then 
+--[[function Debug()
+    if IsButtonPressed(8,0) and IsButtonPressed(14,0) and IsButtonPressed(10,0) B, LeftStick, Left Trigger then 
      CameraAllowChange(true)
      CameraAllowScriptedChange(true)
      CameraReturnToPlayer()
-    elseif IsButtonPressed(14,0) and IsButtonPressed(8,0) --[[DPAD Down, B]] then
+    elseif IsButtonPressed(14,0) and IsButtonPressed(8,0) DPAD Down, B then
      CameraSetActive(14)
      CameraAllowChange(false)
      CameraAllowScriptedChange(false)
      SoundSetAudioFocusCamera()
      SoundSetAudioFocusPlayer()
     end
-end
+end]]
 
 --END OF DEBUG CODE
 ----------------------------------------------------------------------------------------------------
@@ -49,8 +52,8 @@ end
 
 --END OF THREADS
 ----------------------------------------------------------------------------------------------------
-
 --TIMECYCLE FUNCTIONS
+
 F_StartClass = function()
 	if not IsMissionCompleated("3_08") or IsMissionCompleated("3_08_PostDummy") then
 		F_RingSchoolBell() 
@@ -89,8 +92,7 @@ F_CurfewDefaultRules = function()
 	local t = ClockGet()
 	shared.gCurfew = t >= 23 or t < 7
 end
-F_Nothing = function()
-	
+F_Nothing = function()	
 end
 F_ClassWarning = F_Nothing
 F_StartMorning = F_UpdateTimeCycle
@@ -109,4 +111,3 @@ F_EndCurfew_TooTired = F_UpdateTimeCycle
 F_EndTired = F_UpdateTimeCycle
 
 --END OF TIMECYCLE FUNCTIONS
-----------------------------------------------------------------------------------------------------
